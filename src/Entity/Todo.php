@@ -17,7 +17,7 @@ class Todo
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, length: 999)]
     private ?string $description = null;
 
     public function getId(): ?int
