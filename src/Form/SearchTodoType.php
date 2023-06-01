@@ -12,7 +12,7 @@ class SearchTodoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('message', TextareaType::class)
+            ->add('searchTerm', TextareaType::class)
         ;
     }
 

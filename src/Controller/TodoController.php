@@ -26,6 +26,15 @@ class TodoController extends AbstractController
         $searchForm = $this->createForm(TodoFilterType::class);
         $searchForm->handleRequest($request);
 
+        if($searchForm-> get('searchTerm')->getData())
+        {
+            return $this->render('todo/index.html.twig', [
+                    'todos' => $todoRepository->findAll(),
+                    'searchForm' => $searchForm->createView(),
+                    'form' => $form->createView(),
+            ]);
+        }
+
         if($form->isSubmitted() && $form-> isValid())
         {
             $aff = $form-> get('stillTodo')->getData();
