@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Todo;
+use App\Form\TodoFilterType;
 use App\Form\TodoType;
 use App\Repository\TodoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,23 +14,40 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/todo')]
 class TodoController extends AbstractController
 {
-    #[Route('/', name: 'app_todo_index', methods: ['GET'])]
+    #[Route('/', name: 'app_todo_index', methods: ['GET', 'POST'])]
     public function index(TodoRepository $todoRepository, Request $request): Response
     {
         $order = $request->query->get('order');
         $orderby = $request->query->get('orderby');
 
+        $form = $this->createForm(TodoFilterType::class);
+        $form->handleRequest($request);
+
+        $searchForm = $this->createForm(TodoFilterType::class);
+        $searchForm->handleRequest($request);
+
+        if($form->isSubmitted() && $form-> isValid())
+        {
+            $aff = $form-> get('stillTodo')->getData();
+            return $this->render('todo/index.html.twig', [
+                'aff' => $aff,
+                'todos' => $todoRepository->findAll(),
+                'form' => $form->createView()
+            ]);
+        }
         if(isset($order) && isset($orderby))
         {
             $criteria = [$orderby => $order];
             return $this->render('todo/index.html.twig', [
                 'todos' => $todoRepository->findBy([], $criteria),
+                'form' => $form->createView()
             ]);
         }
         else
         {
             return $this->render('todo/index.html.twig', [
                 'todos' => $todoRepository->findAll(),
+                'form' => $form->createView()
             ]);  
         }
     }
@@ -66,7 +84,7 @@ class TodoController extends AbstractController
     {
         $form = $this->createForm(TodoType::class, $todo);
         $form->handleRequest($request);
-
+        $aff = false;
         if ($form->isSubmitted() && $form->isValid()) {
             $todoRepository->save($todo, true);
 
