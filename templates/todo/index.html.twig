@@ -14,8 +14,10 @@
                 <th><a href="{{ path('app_todo_index')}}?orderby=id&order=asc">Id</a></th>
                 <th><a href="{{ path('app_todo_index')}}?orderby=name&order=asc">Name</a></th>
                 <th>Description</th>
+                <th>Priorité</th>
+                <th>Personne associé</th>
                 <th>Status</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +28,12 @@
                         <td>{{ todo.id }}</td>
                         <td>{{ todo.name }}</td>
                         <td>{{ todo.description }}</td>
+                        {% if (todo.user.name) is defined %}
+                            <td>{{ todo.user.name }}</td>
+                        {% else %}
+                            <td>Non assigné</td>
+                        {% endif %}
+                        <td>{{ todo.priority.name }}</td>
                         <td>A faire</td>
 
                         <td>
@@ -39,6 +47,12 @@
                 <td>{{ todo.id }}</td>
                 <td>{{ todo.name }}</td>
                 <td>{{ todo.description }}</td>
+                {% if (todo.user.name) is defined %}
+                    <td>{{ todo.user.name }}</td>
+                {% else %}
+                    <td>Non assigné</td>
+                {% endif %}
+                <td>{{ todo.priority.name }}</td>
                 {% if(todo.done) %}
                     <td>fait</td>
                 {% else %}

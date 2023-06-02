@@ -19,6 +19,19 @@
                 <th>Description</th>
                 <td>{{ todo.description }}</td>
             </tr>
+            <tr>
+                <th>Priorité</th>
+                <td>{{ todo.priority.name }}</td>
+            </tr>
+            <tr>
+                <th>Assigné</th>
+                {% if (todo.user.name) is defined %}
+                    <td>{{ todo.user.name }}</td>
+                {% else %}
+                    <td>Non assigné</td>
+                {% endif %}
+            </tr>
+
         </tbody>
     </table>
 
