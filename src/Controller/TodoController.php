@@ -23,17 +23,17 @@ class TodoController extends AbstractController
         $form = $this->createForm(TodoFilterType::class);
         $form->handleRequest($request);
 
-        $searchForm = $this->createForm(TodoFilterType::class);
-        $searchForm->handleRequest($request);
+        // $searchForm = $this->createForm(TodoFilterType::class);
+        // $searchForm->handleRequest($request);
 
-        if($searchForm-> get('searchTerm')->getData())
-        {
-            return $this->render('todo/index.html.twig', [
-                    'todos' => $todoRepository->findAll(),
-                    'searchForm' => $searchForm->createView(),
-                    'form' => $form->createView(),
-            ]);
-        }
+        // if($searchForm-> get('searchTerm')->getData())
+        // {
+        //     return $this->render('todo/index.html.twig', [
+        //             'todos' => $todoRepository->findAll(),
+        //             // 'searchForm' => $searchForm->createView(),
+        //             'form' => $form->createView(),
+        //     ]);
+        // }
 
         if($form->isSubmitted() && $form-> isValid())
         {

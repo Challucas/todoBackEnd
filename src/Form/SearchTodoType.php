@@ -11,9 +11,9 @@ class SearchTodoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('searchTerm', TextareaType::class)
-        ;
+        // $builder
+        //     ->add('searchTerm', TextareaType::class)
+        // ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
